@@ -1,0 +1,6 @@
+@dealSystem_HostAddress = http://localhost:5261
+
+GET {{dealSystem_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
