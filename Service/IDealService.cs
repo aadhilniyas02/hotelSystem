@@ -67,7 +67,7 @@ namespace dealSystem.services
                 Hotels = new List<Hotel>()
             };
 
-                //    if (dealToCreate.Hotels != null && dealToCreate.Hotels.Any())
+                    if (dealToCreate.Hotels != null && dealToCreate.Hotels.Any())
                 //      {
                 //             foreach (var hotelDto in dealToCreate.Hotels)
                 //               {
