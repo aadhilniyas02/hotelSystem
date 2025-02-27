@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\mohom\\Desktop\\dealSystem\\dealSystem.csproj": {}
+    "C:\\Users\\mohom\\Desktop\\dealSystem\\dealSystem.csproj": {}
   },
   "projects": {
-    "c:\\Users\\mohom\\Desktop\\dealSystem\\dealSystem.csproj": {
+    "C:\\Users\\mohom\\Desktop\\dealSystem\\dealSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\mohom\\Desktop\\dealSystem\\dealSystem.csproj",
+        "projectUniqueName": "C:\\Users\\mohom\\Desktop\\dealSystem\\dealSystem.csproj",
         "projectName": "dealSystem",
-        "projectPath": "c:\\Users\\mohom\\Desktop\\dealSystem\\dealSystem.csproj",
+        "projectPath": "C:\\Users\\mohom\\Desktop\\dealSystem\\dealSystem.csproj",
         "packagesPath": "C:\\Users\\mohom\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\mohom\\Desktop\\dealSystem\\obj\\",
+        "outputPath": "C:\\Users\\mohom\\Desktop\\dealSystem\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mohom\\AppData\\Roaming\\NuGet\\NuGet.Config"

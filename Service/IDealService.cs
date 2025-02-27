@@ -15,7 +15,7 @@ namespace dealSystem.services
     public class IDealService: InterfaceService
     {
         private readonly DealContext _context;
-
+   
         public int Id { get; private set; }
 
         public IDealService(DealContext context)
@@ -27,7 +27,9 @@ namespace dealSystem.services
         {
             try
             {
-                var deals = await _context.DealTable.Include(d => d.Hotels).ToListAsync();
+                var deals = await _context.DealTable
+                                                    .Include(d => d.Hotels)
+                                                    .ToListAsync();
                 return  deals;
             }
             catch (Exception e)

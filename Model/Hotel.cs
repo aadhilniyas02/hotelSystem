@@ -1,5 +1,7 @@
 
 
+using System.Text.Json.Serialization;
+
 namespace dealSystem.Model
 {
     public class Hotel
@@ -12,8 +14,10 @@ namespace dealSystem.Model
 
         public required string Description { get; set; }
 
+        [JsonIgnore]
         public int DealId { get; set; }
 
+        [JsonIgnore]
         public  Deal Deal { get; set; }
     }
 
