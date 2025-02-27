@@ -23,5 +23,4 @@ public class DealContext : DbContext
         .HasForeignKey(h => h.DealId );
     }
 
-
 }

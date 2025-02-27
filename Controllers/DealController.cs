@@ -54,7 +54,6 @@ namespace dealSystem.Controllers
         }
 
 
-
         // CREATE a new Deal
         [HttpPost]
         public async Task<ActionResult<DealDto>> CreateDeal(DealDto dealToCreate )
@@ -72,7 +71,6 @@ namespace dealSystem.Controllers
             }
            
         }
-
 
         // PUT - Update an existing deal 
         [HttpPut("{id}")]

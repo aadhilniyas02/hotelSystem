@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 
+
 namespace dealSystem.services
 {
     public class IDealService: InterfaceService
@@ -42,9 +43,7 @@ namespace dealSystem.services
         {
             try
             {
-                var deals = await _context.DealTable
-                    .Include(d => d.Hotels)
-                .FirstOrDefaultAsync(d => d.Id == id); 
+                var deals = await _context.DealTable.Include(d => d.Hotels).FirstOrDefaultAsync(d => d.Id == id); 
                 return deals;
             }
             catch (Exception e )
@@ -58,45 +57,57 @@ namespace dealSystem.services
 
         public async Task<Deal> AddDealAsync(DealDto dealToCreate)
         {
+        
+            try
+                {
+                    var deal = new Deal
+                    {
+                        Name = dealToCreate.Name,
+                        Slug = dealToCreate.Slug,
+                        Title = dealToCreate.Title,
+                        Hotels = new List<Hotel>()
+                    };
 
-            var deal = new Deal
-            {
-                Name = dealToCreate.Name,
-                Slug = dealToCreate.Slug,
-                Title = dealToCreate.Title,
-                Hotels = new List<Hotel>()
-            };
+                            if (dealToCreate.Hotels != null && dealToCreate.Hotels.Any())
+                            {
 
-                    if (dealToCreate.Hotels != null && dealToCreate.Hotels.Any())
-                //      {
-                //             foreach (var hotelDto in dealToCreate.Hotels)
-                //               {
-                //                   var hotelEntity = new Hotel
-                //                  {
-                //                       Name = hotelDto.Name,
-                //                       Rating = hotelDto.Rating,
-                //                       Description = hotelDto.Description
-                //                   };
+                            List<Hotel> newOne = new List<Hotel>();
 
-                //                   //deal.Hotels.Add(hotelEntity);
-                //               }
-            
-                //      }
-                   
-            
-             _context.DealTable.Add(deal);
-            await _context.SaveChangesAsync();
+                                    foreach (var hotelDto in dealToCreate.Hotels)
+                                    {
+                                        var hotelEntity = new Hotel
+                                        {
+                                            Name = hotelDto.Name,
+                                            Rating = hotelDto.Rating,
+                                            Description = hotelDto.Description,
+                                        };
 
-            return deal;
+                                            newOne.Add(hotelEntity);
+                                    }
+
+                                    deal.Hotels = newOne;
+                    
+                            }
+                        
+                    _context.DealTable.Add(deal);
+                    await _context.SaveChangesAsync();
+
+                    return deal;
+                }
+                
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    throw;
+            }
         }
+           
 
 
 
         public async Task<Deal> UpdateDealAsync(int id, DealDto dealToUpdate)
         {
-            var deal = await _context.DealTable
-                .Include(d => d.Hotels)
-                .FirstOrDefaultAsync(d => d.Id == id);
+            var deal = await _context.DealTable.Include(d => d.Hotels).FirstOrDefaultAsync(d => d.Id == id);
 
             if(deal == null)
                 throw new KeyNotFoundException("Deal not found");
