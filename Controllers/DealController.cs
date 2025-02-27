@@ -72,6 +72,11 @@ namespace dealSystem.Controllers
            
         }
 
+        private void LogException(Exception e)
+        {
+            throw new NotImplementedException();
+        }
+
         // PUT - Update an existing deal 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDeal(int id, DealDto dealToUpdate)

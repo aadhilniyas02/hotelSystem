@@ -16,6 +16,8 @@ namespace dealSystem.services
     {
         private readonly DealContext _context;
 
+        public int Id { get; private set; }
+
         public IDealService(DealContext context)
         {
             _context = context;
@@ -25,7 +27,7 @@ namespace dealSystem.services
         {
             try
             {
-                var deals = await _context.DealTable.ToListAsync();
+                var deals = await _context.DealTable.Include(d => d.Hotels).ToListAsync();
                 return  deals;
             }
             catch (Exception e)
@@ -34,7 +36,7 @@ namespace dealSystem.services
                 throw;
             }
 
-            //.Include(d => d.Hotels)
+            //
             
         }
         
@@ -92,17 +94,16 @@ namespace dealSystem.services
                     _context.DealTable.Add(deal);
                     await _context.SaveChangesAsync();
 
-                    return deal;
+                    return  deal;
+
                 }
-                
+
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                     throw;
             }
         }
-           
-
 
 
         public async Task<Deal> UpdateDealAsync(int id, DealDto dealToUpdate)

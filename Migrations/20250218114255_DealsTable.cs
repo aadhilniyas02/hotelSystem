@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using dealSystem.Model;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -62,6 +63,11 @@ namespace dealSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "DealTable");
+        }
+
+        internal List<Deal> ToList()
+        {
+            throw new NotImplementedException();
         }
     }
 }
