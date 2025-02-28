@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5V1rR4LGjpE=",
+  "dgSpecHash": "Bd2OWG72MQ4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\mohom\\Desktop\\dealSystem\\dealSystem.csproj",
+  "projectFilePath": "c:\\Users\\mohom\\Desktop\\dealSystem\\dealSystem.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mohom\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\mohom\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",

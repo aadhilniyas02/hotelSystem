@@ -28,18 +28,15 @@ namespace dealSystem.services
             try
             {
                 var deals = await _context.DealTable
-                                                    .Include(d => d.Hotels)
-                                                    .ToListAsync();
-                return  deals;
+                        .Include(d => d.Hotels)
+                        .ToListAsync();
+                     return  deals;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 throw;
-            }
-
-            //
-            
+            } 
         }
         
 
@@ -47,7 +44,9 @@ namespace dealSystem.services
         {
             try
             {
-                var deals = await _context.DealTable.Include(d => d.Hotels).FirstOrDefaultAsync(d => d.Id == id); 
+                var deals = await _context.DealTable
+                        .Include(d => d.Hotels)
+                        .FirstOrDefaultAsync(d => d.Id == id); 
                 return deals;
             }
             catch (Exception e )
@@ -110,48 +109,81 @@ namespace dealSystem.services
 
         public async Task<Deal> UpdateDealAsync(int id, DealDto dealToUpdate)
         {
-            var deal = await _context.DealTable.Include(d => d.Hotels).FirstOrDefaultAsync(d => d.Id == id);
-
-            if(deal == null)
-                throw new KeyNotFoundException("Deal not found");
-            
-            deal.Name = dealToUpdate.Name;
-            deal.Slug = dealToUpdate.Slug;
-            deal.Title = dealToUpdate.Title;
-
-            var hotels = dealToUpdate.Hotels;
-
-            if(hotels != null)
+            try
             {
-                deal.Hotels = Enumerable.Empty<Hotel>();
-            }
+                var deal = await _context.DealTable
+                        .Include(d => d.Hotels)
+                        .FirstOrDefaultAsync(d => d.Id == id);
+
+             if(deal == null)
+                 throw new KeyNotFoundException("Deal not found");
+            
+             deal.Name = dealToUpdate.Name;
+             deal.Slug = dealToUpdate.Slug;
+             deal.Title = dealToUpdate.Title;
+
+                if(dealToUpdate.Hotels != null && dealToUpdate.Hotels.Any())
+                {
+                    var newHotels = new List<Hotel>();
+
+                    foreach (var hotelDto in dealToUpdate.Hotels)
+                    {
+                        var hotel = deal.Hotels.FirstOrDefault();
+                        
+                        if(hotel == null)
+                        {
+                            hotel = new Hotel
+                            {
+                                Name = hotelDto.Name,
+                                Rating = hotelDto.Rating,
+                                Description = hotelDto.Description,
+                                DealId = deal.Id
+                            };
+                            _context.HotelTable.Add(hotel);
+                        }
+                        else
+                        {
+                            hotel.Name = hotelDto.Name;
+                            hotel.Rating = hotelDto.Rating;
+                            hotel.Description = hotelDto.Description;
+                        }
+                        newHotels.Add(hotel);
+                    }
+                    deal.Hotels = newHotels;
+                }
 
             await _context.SaveChangesAsync();
             return deal; 
+            }
+            
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            
         }
         
 
     
         public async Task<bool> DeleteDealAsync(int id)
         {
-            var deal = await _context.DealTable.Include(d => d.Hotels).FirstOrDefaultAsync(d => d.Id ==id);
-            if (deal == null) return false;
+            try
+            {
+                var deal = await _context.DealTable.Include(d => d.Hotels).FirstOrDefaultAsync(d => d.Id ==id);
+                    if (deal == null) return false;
 
-            _context.DealTable.Remove(deal);
-            await _context.SaveChangesAsync();
-            return true;
-        }
+                _context.DealTable.Remove(deal);
+                await _context.SaveChangesAsync();
 
-        public async Task<Hotel> AddHotelToDealAsync(int dealId, Hotel hotel)
-        {
-            var deal = await _context.DealTable.Include(d => d.Hotels).FirstOrDefaultAsync(d => d.Id == dealId);
-            if( deal == null)
-                throw new KeyNotFoundException("Deal Not Found");
-
-            
-            hotel.DealId = dealId;
-            _context.HotelTable.Add(hotel);
-            return hotel;
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+          
         }
 
         public async Task<bool> DeleteHotelAsync(int hotelId)

@@ -72,17 +72,21 @@ namespace dealSystem.Controllers
            
         }
 
-        private void LogException(Exception e)
-        {
-            throw new NotImplementedException();
-        }
-
         // PUT - Update an existing deal 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDeal(int id, DealDto dealToUpdate)
         {
-            var updatedDeal = await _dealservice.UpdateDealAsync(id, dealToUpdate);
-            return Ok(updatedDeal);
+            try 
+            {
+                var updatedDeal = await _dealservice.UpdateDealAsync(id, dealToUpdate);
+                    return Ok(updatedDeal);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+            
         }
 
 
@@ -90,16 +94,17 @@ namespace dealSystem.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDeal (int id)
         {
-            var result = await _dealservice.DeleteDealAsync(id);
+            try
+            {
+                var result = await _dealservice.DeleteDealAsync(id);
 
-            return Ok("Deal Deleted Successfully");
-        }
-
-        [HttpPost("{dealId}/add-hotel")]
-        public async Task<ActionResult<Hotel>> AddHotelToDeal(int dealId, Hotel hotel)
-        {
-            var addedHotel = await _dealservice.AddHotelToDealAsync(dealId, hotel);
-            return Ok(addedHotel);
+                return Ok("Deal Deleted Successfully");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
         }
 
         [HttpDelete("delete-hotel/{hotelId}")]
